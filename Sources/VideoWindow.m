@@ -1,8 +1,8 @@
 /*
      File: VideoWindow.m
  Abstract: Implementation file for the video window class in CocoaDVDPlayer, 
- an ADC Reference Library sample project.
-  Version: 1.1
+ an Apple Developer sample project.
+  Version: 1.2
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -42,7 +42,7 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2009 Apple Inc. All Rights Reserved.
+ Copyright (C) 2012 Apple Inc. All Rights Reserved.
  
  */ 
 
@@ -100,7 +100,7 @@ VideoWindow.h, we declare them here in a category that extends the class. */
 {
 	/* pass all key-down events in this window to our delegate, the Controller
 	object */
-	BOOL eventHandled = [[self delegate] onKeyDown:theEvent];
+	BOOL eventHandled = [(Controller *) [self delegate] onKeyDown:theEvent];
 
 	if (eventHandled == NO) {
 		[super keyDown:theEvent];
@@ -118,49 +118,22 @@ in the window. */
 	/* index of selected button in DVD menu */
 	SInt32 index = kDVDButtonIndexNone;
 
-#if __MAC_OS_X_VERSION_MIN_REQUIRED < 1050
-
-	/* convert mouse location to QuickDraw coordinates */
-	NSPoint location = [theEvent locationInWindow];
-	Point portPt;
-	portPt.h = location.x;
-	portPt.v = [self frame].size.height - location.y;
-	
-	/* notify DVD Playback */
-	switch ([theEvent type])
-	{
-			OSStatus err;
-		case NSMouseMoved:
-			err = DVDDoMenuMouseOver (portPt, &index);
-			break;
-		case NSLeftMouseDown:
-			err = DVDDoMenuClick (portPt, &index);
-			break;
-		default:
-			break;
-	}
-	
-#else
-
 	/* get mouse location */
 	NSPoint location = [theEvent locationInWindow];
 	location.y = [self frame].size.height - location.y;
 
 	switch ([theEvent type])
 	{
-		OSStatus err;
 		case NSMouseMoved:
-			err = DVDDoMenuCGMouseOver ((CGPoint *)&location, &index);
+			DVDDoMenuCGMouseOver ((CGPoint *)&location, &index);
 			break;
 		case NSLeftMouseDown:
-			err = DVDDoMenuCGClick ((CGPoint *)&location, &index);
+			DVDDoMenuCGClick ((CGPoint *)&location, &index);
 			break;
 		default:
 			break;
 	}
 
-#endif
-	
 	/* sync the cursor */
 	NSCursor *cursor;
 	if (index != kDVDButtonIndexNone) {
@@ -333,13 +306,14 @@ launching and the Controller object sends us the setupVideoWindow message, and
 		NSLog(@"Step 3: Set Video Display");
 		Boolean isSupported = FALSE;
 		OSStatus result = DVDSwitchToDisplay (newDisplay, &isSupported);
-		NSAssert1 (!result, @"DVDSwitchToDisplay returned %d", result);
-
+		if (result != noErr) {
+			NSLog(@"DVDSwitchToDisplay returned %ld", result);
+		}
 		if (isSupported) { 
 			curDisplay = newDisplay;
 		}
 		else {
-			NSLog(@"video display %d not supported", newDisplay);
+			NSLog(@"video display %u not supported", newDisplay);
 		}
 	}
 }
@@ -358,25 +332,9 @@ when the aspect ratio of the title changes. */
 	NSRect content = [[self contentView] bounds];
 	NSRect frame = [self frame];
 
-#if __MAC_OS_X_VERSION_MIN_REQUIRED < 1050
-	
-	/* create an equivalent QuickDraw rectangle with window local coordinates */
-	Rect qdRect;
-	qdRect.left = 0;
-	qdRect.right = content.size.width;
-	qdRect.bottom = frame.size.height;
-	qdRect.top = frame.size.height - content.size.height;
-	
-	/* set the video area */
-	OSStatus result = DVDSetVideoBounds (&qdRect);	
-	
-#else
-	
 	CGRect bounds = CGRectMake (0, frame.size.height - content.size.height, content.size.width, content.size.height);
 	OSStatus result = DVDSetVideoCGBounds ((CGRect *)&bounds);
 
-#endif
-	
 	NSAssert1 (!result, @"DVDSetVideoCGBounds returned %d", result);
 }
 

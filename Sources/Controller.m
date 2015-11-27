@@ -1,8 +1,8 @@
 /*
      File: Controller.m
  Abstract: Implementation file for the Controller class in CocoaDVDPlayer, 
- an ADC Reference Library sample project.
-  Version: 1.1
+ an Apple Developer sample project.
+  Version: 1.2
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -42,7 +42,7 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2009 Apple Inc. All Rights Reserved.
+ Copyright (C) 2012 Apple Inc. All Rights Reserved.
  
  */ 
 
@@ -62,47 +62,6 @@
 from the callback function MyDVDEventHandler (which runs in a thread other than
 the main thread) to the method handleDVDEvent, which runs in the main thread and
 actually does the work. */
-
-#if __MAC_OS_X_VERSION_MIN_REQUIRED < 1050
-
-@interface DVDEvent : NSObject
-{
-	DVDEventCode mEventCode;
-	UInt32 mEventData1, mEventData2;
-}
-
-- (id) initWithData:(DVDEventCode)eventCode 
-			  data1:(UInt32)eventData1 
-			  data2:(UInt32)eventData2;
-
-- (DVDEventCode) eventCode;
-- (UInt32) eventData1;
-- (UInt32) eventData2;
-
-@end
-
-
-@implementation DVDEvent
-
-- (id) initWithData: (DVDEventCode)eventCode 
-			  data1:(UInt32)eventData1 
-			  data2:(UInt32)eventData2 
-{
-	[super init];
-	mEventCode = eventCode;
-	mEventData1 = eventData1;
-	mEventData2 = eventData2;
-	return self;
-}
-
-
-- (DVDEventCode) eventCode { return mEventCode; }
-- (UInt32) eventData1 { return mEventData1; }
-- (UInt32) eventData2 { return mEventData2; }
-
-@end
-
-#else
 
 @interface DVDEvent : NSObject
 {
@@ -141,7 +100,6 @@ actually does the work. */
 
 @end
 
-#endif
 
 /*
 ********************************************************************************
@@ -154,7 +112,7 @@ actually does the work. */
 /* These methods are used inside this file only. Instead of declaring them in
 Controller.h, we declare them here in a category that extends the class. */
 
-@interface Controller (InternalMethods)
+@interface Controller (InternalMethods) <NSApplicationDelegate>
 
 - (BOOL) searchMountedDVDDisc;
 - (BOOL) hasMedia;
@@ -174,20 +132,6 @@ Controller.h, we declare them here in a category that extends the class. */
 - (void) logMediaInfo;
 - (void) resetUI;
 
-#if __MAC_OS_X_VERSION_MIN_REQUIRED < 1050
-
-void MyDVDErrorHandler (
-	DVDErrorCode inErrorCode, 
-	UInt32 inRefCon);
-
-void MyDVDEventHandler (
-	DVDEventCode inEventCode, 
-	UInt32 inEventData1, 
-	UInt32 inEventData2, 
-	UInt32 inRefCon);
-
-#else
-
 void MyDVDErrorHandler (
 	DVDErrorCode inErrorCode, 
 	void *inRefCon);
@@ -197,8 +141,6 @@ void MyDVDEventHandler (
 	DVDEventValue inEventData1, 
 	DVDEventValue inEventData2, 
 	void *inRefCon);
-
-#endif
 
 @end
 
@@ -363,10 +305,10 @@ range. */
 {
 	/* get range and current audio level */
 	UInt16 minLevel, curLevel, maxLevel;
-	DVDGetAudioVolumeInfo (&minLevel, &curLevel, &maxLevel);
+	OSStatus result = DVDGetAudioVolumeInfo (&minLevel, &curLevel, &maxLevel);
+	NSAssert1 (!result, @"DVDGetAudioVolumeInfo returned %d", result);
 
-	/* default action is to maintain the current level */
-	UInt16 newLevel = curLevel;
+	UInt16 newLevel;
 
 	/* compute how much we are going to change */
 	UInt16 delta = (maxLevel - minLevel + 1) / 16;
@@ -381,7 +323,7 @@ range. */
 	}
 
 	/* set the new audio level */
-	OSStatus result = DVDSetAudioVolume (newLevel);
+	result = DVDSetAudioVolume (newLevel);
 	NSAssert1 (!result, @"DVDSetAudioVolume returned %d", result);
 
 	/* return the new level, which we use to adjust the audio slider */
@@ -461,7 +403,7 @@ error handlers, and defines the rate at which timer events arrive. */
 	OSStatus result = DVDInitialize();
 	if (result != noErr) {
 		/* we can't do anything useful now, so we handle the error and exit */
-		NSLog(@"DVDInitialize returned %d", result);
+		NSLog(@"DVDInitialize returned %ld", result);
 		if (result == kDVDErrorInitializingLib) {
 			/* notify user that another client is using the framework */
 			[self displayAlertWithMessage:@"frameworkBusy" withInfo:@"frameworkBusyInfo"];
@@ -483,36 +425,18 @@ error handlers, and defines the rate at which timer events arrive. */
 		kDVDEventVideoStandard, 
 	};
 
-#if __MAC_OS_X_VERSION_MIN_REQUIRED < 1050
-
-	result = DVDRegisterEventCallBack (
-	   MyDVDEventHandler, 
-	   eventCodes, 
-	   sizeof(eventCodes)/sizeof(DVDEventCode), 
-	   (UInt32)self, 
-	   &mEventCallBackID);
-	
-#else	
-
 	result = DVDRegisterEventCallBack (
 		MyDVDEventHandler, 
 		eventCodes, 
 		sizeof(eventCodes)/sizeof(DVDEventCode), 
 		(void *)self, 
 		&mEventCallBackID);
-
-#endif
 	
 	NSAssert1 (!result, @"DVDRegisterEventCallBack returned %d", result);
 
 	/* install a handler for unrecoverable errors */
 
-#if __MAC_OS_X_VERSION_MIN_REQUIRED < 1050
-	result = DVDSetFatalErrorCallBack (MyDVDErrorHandler, (UInt32) self);
-#else
 	result = DVDSetFatalErrorCallBack (MyDVDErrorHandler, (void *)self);
-#endif
-	
 	NSAssert1 (!result, @"DVDSetFatalErrorCallBack returned %d", result);
 
 	/* Change the period for the recurring kDVDEventTitleTime event to 1000
@@ -686,8 +610,8 @@ region code is and how many changes remain. */
 	SInt16 numChangesLeft = -1;
 	DVDGetDiscRegionCode (&discRegions); 
 	DVDGetDriveRegionCode (&driveRegion, &numChangesLeft);
-	NSLog(@"Disc Regions: 0x%x", discRegions);
-	NSLog(@"Drive Region: 0x%x", driveRegion);
+	NSLog(@"Disc Regions: 0x%lx", discRegions);
+	NSLog(@"Drive Region: 0x%lx", driveRegion);
 	NSLog(@"Changes Left: %d", numChangesLeft);
 
 	/* DVD Playback Services checks for a region match whenever you open
@@ -705,7 +629,9 @@ region code is and how many changes remain. */
 {
 	Boolean hasMedia = FALSE;
 	OSStatus result = DVDHasMedia (&hasMedia);
-	NSAssert1 (!result, @"DVDHasMedia returned %d", result);
+	if (result != noErr) {
+		NSLog(@"DVDHasMedia returned %ld", result);
+	}
 	if (hasMedia) { return YES; }
 	else { return NO; }
 } 
@@ -717,31 +643,6 @@ may want to update the UI, which involves drawing. Therefore we pass the event
 information to the handleDVDEvent method, which runs in the main thread and
 actually does the work. Cocoa requires that we package the information inside an
 object. */
-
-#if __MAC_OS_X_VERSION_MIN_REQUIRED < 1050
-
-void MyDVDEventHandler (
-	DVDEventCode inEventCode, 
-	UInt32 inEventData1, 
-	UInt32 inEventData2, 
-	UInt32 inRefCon
-) 
-{
-	Controller *controller = (Controller *)inRefCon;
-	
-	/* decouple the event from the callback thread */
-	DVDEvent *dvdEvent = [[DVDEvent alloc] initWithData:inEventCode 
-												  data1:inEventData1 
-												  data2:inEventData2];
-	
-	[controller performSelectorOnMainThread:@selector(handleDVDEvent:) 
-								 withObject:dvdEvent 
-							  waitUntilDone:FALSE];
-	
-	[dvdEvent release];
-}
-
-#else
 
 void MyDVDEventHandler (
 	DVDEventCode inEventCode, 
@@ -763,8 +664,6 @@ void MyDVDEventHandler (
 
 	[dvdEvent release];
 }
-
-#endif
 
 /* This method does the work of handling the DVD events that we registered to
 receive in the beginSession method. */
@@ -815,27 +714,15 @@ such as a damaged disc has made it impossible to continue with playback. You
 should always implement this callback and respond by ending the playback
 session. */
 
-#if __MAC_OS_X_VERSION_MIN_REQUIRED < 1050
-
-void MyDVDErrorHandler (DVDErrorCode inErrorCode, UInt32 inRefCon)
-{
-	Controller *controller = (Controller *)inRefCon;
-	[controller handleDVDError:inErrorCode];
-}
-
-#else
-
 void MyDVDErrorHandler (DVDErrorCode inErrorCode, void *inRefCon)
 {
 	Controller *controller = (Controller *)inRefCon;
 	[controller handleDVDError:inErrorCode];
 }
 
-#endif
-
 - (void) handleDVDError:(DVDErrorCode)errorCode
 {
-	NSLog(@"fatal error %d", errorCode);
+	NSLog(@"fatal error %ld", errorCode);
 	[NSApp terminate:self];
 }
 
@@ -917,9 +804,11 @@ menu. */
 	[panel setCanChooseDirectories:YES];
 	[panel setAllowsMultipleSelection:NO];
 	
-	if ([panel runModalForTypes:nil] == NSOKButton)
+	if ([panel runModal] == NSOKButton)
 	{
-		NSString *folderPath = [[panel filenames] objectAtIndex:0];
+		NSURL *folderURL = [[panel URLs] objectAtIndex:0];
+		NSString *folderPath = [folderURL path];
+		NSLog(@"Opening Media Folder: %@", folderPath);
 		[self openMedia:folderPath isVolume:NO];
 	}
 }
@@ -1079,7 +968,11 @@ Control window. */
 	{
 		UInt16 numAngles = 0, angle = 0;
 		OSStatus result = DVDGetNumAngles (&numAngles);
+		NSAssert1 (!result, @"DVDGetNumAngles returned %d", result);
+		
 		result = DVDGetAngle (&angle);
+		NSAssert1 (!result, @"DVDGetAngle returned %d", result);
+		
 		if (++angle > numAngles) 
 			angle = 1;
 		result = DVDSetAngle (angle);
@@ -1124,7 +1017,7 @@ Control window. It simply cycles though the bookmarks in the mBookmarks array. *
 }
 
 
-/* This method implements the action for the (Audio) Volume Up item in the
+/* This method implements the action for the (Audio) Volume Down item in the
 Controls menu. */
 
 - (IBAction) onVolumeDown:(id)sender 
@@ -1134,7 +1027,7 @@ Controls menu. */
 }
 
 
-/* This method implements the action for the (Audio) Volume Down item in the
+/* This method implements the action for the (Audio) Volume Up item in the
 Controls menu. */
 
 - (IBAction) onVolumeUp:(id)sender 
@@ -1151,6 +1044,7 @@ menu. */
 {
 	Boolean isMuted;
 	OSStatus result = DVDIsMuted (&isMuted);
+	NSAssert1 (!result, @"DVDIsMuted returned %d", result);
 	result = DVDMute (!isMuted);
 	NSAssert1 (!result, @"DVDMute returned %d", result);
 }

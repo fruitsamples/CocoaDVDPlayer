@@ -1,8 +1,8 @@
 /*
      File: Bookmark.m
- Abstract: Implementation file for the Bookmark class in CocoaDVDPlayer, an ADC
- Reference Library sample project.
-  Version: 1.1
+ Abstract: Implementation file for the Bookmark class in CocoaDVDPlayer, 
+ an Apple Developer sample project.
+  Version: 1.2
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -42,7 +42,7 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2009 Apple Inc. All Rights Reserved.
+ Copyright (C) 2012 Apple Inc. All Rights Reserved.
  
  */ 
 
@@ -75,7 +75,7 @@ memory. */
 		/* get bookmark size */
 		OSStatus result = DVDGetBookmark (NULL, &size);
 		if (result != noErr) {
-			NSLog(@"DVDGetBookmark returned %d", result);
+			NSLog(@"DVDGetBookmark returned %ld", result);
 		}
 		else {
 			/* allocate memory for bookmark data */
@@ -84,7 +84,7 @@ memory. */
 			/* get bookmark to current location */
 			result = DVDGetBookmark (data, &size);
 			if (result != noErr) {
-				NSLog(@"DVDGetBookmark returned %d", result);
+				NSLog(@"DVDGetBookmark returned %ld", result);
 			}
 		}
 	}
@@ -107,7 +107,7 @@ memory. */
 {
 	OSStatus result = DVDGotoBookmark (data, size);
 	if (result != noErr) {
-		NSLog(@"DVDGotoBookmark returned %d", result);
+		NSLog(@"DVDGotoBookmark returned %ld", result);
 	}
 }
 

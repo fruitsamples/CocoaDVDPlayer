@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 44;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,7 +29,7 @@
 		84D6720108D6485600633655 /* Reverse.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 84D671F108D6485600633655 /* Reverse.tiff */; };
 		84D6720208D6485600633655 /* Stop.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 84D671F208D6485600633655 /* Stop.tiff */; };
 		84D8ADC308DE604700508320 /* Action.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 84D8ADC208DE604700508320 /* Action.tiff */; };
-		84E3C36F08E44E640010BB09 /* ADC.png in Resources */ = {isa = PBXBuildFile; fileRef = 84E3C36E08E44E640010BB09 /* ADC.png */; };
+		84ED4F971501500900B034E9 /* developer.png in Resources */ = {isa = PBXBuildFile; fileRef = 84ED4F961501500900B034E9 /* developer.png */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,21 +38,21 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* CocoaDVDPlayer_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaDVDPlayer_Prefix.pch; sourceTree = "<group>"; };
-		840D095608EAF90400FF0641 /* ControlWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ControlWindow.h; path = Sources/ControlWindow.h; sourceTree = "<group>"; };
-		840D095708EAF90400FF0641 /* ControlWindow.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = ControlWindow.m; path = Sources/ControlWindow.m; sourceTree = "<group>"; };
+		840D095608EAF90400FF0641 /* ControlWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ControlWindow.h; path = Sources/ControlWindow.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		840D095708EAF90400FF0641 /* ControlWindow.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = ControlWindow.m; path = Sources/ControlWindow.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		848DBAFA0ECBA4A6003708DE /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 		848DBB410ECBB93F003708DE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		8495402C0D89A4710087B8F0 /* DVDPlayback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVDPlayback.framework; path = /System/Library/Frameworks/DVDPlayback.framework; sourceTree = "<absolute>"; };
 		84B7D7E50F4CBAA80047ADBB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		84D671CE08D6480700633655 /* Bookmark.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Bookmark.h; path = Sources/Bookmark.h; sourceTree = "<group>"; };
 		84D671CF08D6480700633655 /* Bookmark.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = Bookmark.m; path = Sources/Bookmark.m; sourceTree = "<group>"; };
-		84D671D008D6480700633655 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Controller.h; path = Sources/Controller.h; sourceTree = "<group>"; };
-		84D671D108D6480700633655 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = Controller.m; path = Sources/Controller.m; sourceTree = "<group>"; };
-		84D671D408D6480700633655 /* PlaybackTime.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = PlaybackTime.h; path = Sources/PlaybackTime.h; sourceTree = "<group>"; };
-		84D671D508D6480700633655 /* PlaybackTime.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = PlaybackTime.m; path = Sources/PlaybackTime.m; sourceTree = "<group>"; };
-		84D671D608D6480700633655 /* VideoWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VideoWindow.h; path = Sources/VideoWindow.h; sourceTree = "<group>"; };
+		84D671D008D6480700633655 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Controller.h; path = Sources/Controller.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		84D671D108D6480700633655 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = Controller.m; path = Sources/Controller.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		84D671D408D6480700633655 /* PlaybackTime.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PlaybackTime.h; path = Sources/PlaybackTime.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		84D671D508D6480700633655 /* PlaybackTime.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = PlaybackTime.m; path = Sources/PlaybackTime.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		84D671D608D6480700633655 /* VideoWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VideoWindow.h; path = Sources/VideoWindow.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		84D671D708D6480700633655 /* VideoWindow.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = VideoWindow.m; path = Sources/VideoWindow.m; sourceTree = "<group>"; };
-		84D671DD08D6481C00633655 /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Sources/main.m; sourceTree = "<group>"; };
+		84D671DD08D6481C00633655 /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = main.m; path = Sources/main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84D671E108D6485600633655 /* Camera.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Camera.tiff; sourceTree = "<group>"; };
 		84D671E208D6485600633655 /* Eject.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Eject.tiff; sourceTree = "<group>"; };
 		84D671E408D6485600633655 /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -67,7 +67,7 @@
 		84D671F108D6485600633655 /* Reverse.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Reverse.tiff; sourceTree = "<group>"; };
 		84D671F208D6485600633655 /* Stop.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Stop.tiff; sourceTree = "<group>"; };
 		84D8ADC208DE604700508320 /* Action.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Action.tiff; sourceTree = "<group>"; };
-		84E3C36E08E44E640010BB09 /* ADC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ADC.png; sourceTree = "<group>"; };
+		84ED4F961501500900B034E9 /* developer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = developer.png; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* CocoaDVDPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocoaDVDPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -161,8 +161,8 @@
 		84D671DF08D6485600633655 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				84ED4F961501500900B034E9 /* developer.png */,
 				84B7D7E40F4CBAA80047ADBB /* MainMenu.xib */,
-				84E3C36E08E44E640010BB09 /* ADC.png */,
 				84D8ADC208DE604700508320 /* Action.tiff */,
 				84D671E108D6485600633655 /* Camera.tiff */,
 				84D671E208D6485600633655 /* Eject.tiff */,
@@ -208,9 +208,17 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
 			buildConfigurationList = 84D671BA08D6469300633655 /* Build configuration list for PBXProject "CocoaDVDPlayer" */;
-			compatibilityVersion = "Xcode 3.0";
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+				English,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CocoaDVDPlayer */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -239,8 +247,8 @@
 				84D6720108D6485600633655 /* Reverse.tiff in Resources */,
 				84D6720208D6485600633655 /* Stop.tiff in Resources */,
 				84D8ADC308DE604700508320 /* Action.tiff in Resources */,
-				84E3C36F08E44E640010BB09 /* ADC.png in Resources */,
 				84B7D7E60F4CBAA80047ADBB /* MainMenu.xib in Resources */,
+				84ED4F971501500900B034E9 /* developer.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,7 +307,9 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = CocoaDVDPlayer;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -311,7 +321,9 @@
 				GCC_PREFIX_HEADER = CocoaDVDPlayer_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = CocoaDVDPlayer;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -319,11 +331,10 @@
 		84D671BB08D6469300633655 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_FAST_OBJC_DISPATCH = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -351,13 +362,14 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"$(value)",
 					"-Wimplicit-function-declaration",
 				);
 				OTHER_CPLUSPLUSFLAGS = "";
-				PREBINDING = NO;
+				SDKROOT = macosx;
 				ZERO_LINK = NO;
 			};
 			name = Debug;
@@ -365,12 +377,10 @@
 		84D671BC08D6469300633655 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_FAST_OBJC_DISPATCH = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = s;
@@ -378,8 +388,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
-				PREBINDING = NO;
+				SDKROOT = macosx;
 				ZERO_LINK = NO;
 			};
 			name = Release;
